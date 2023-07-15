@@ -1,27 +1,9 @@
-package com.landvibe.landlog.domain;
+package com.landvibe.landlog.controller;
 
-public class Member {
-
-    private Long id;
+public class MemberJoinForm {
     private String name;
     private String email;
     private String password;
-
-    public Member() {
-    }
-
-    public Member(Long id, String email) {
-        this.id = id;
-        this.email = email;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
