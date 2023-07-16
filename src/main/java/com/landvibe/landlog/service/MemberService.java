@@ -24,7 +24,7 @@ public class MemberService {
     }
 
     public Optional<Member> login(MemberLoginForm form) {
-        return memberRepository.findByEmailWithPassword(form.getEmail(), form.getPassword());
+        return memberRepository.findByEmailWithPassword(form);
     }
 
     private void validateDuplicateMember(Member member) {
