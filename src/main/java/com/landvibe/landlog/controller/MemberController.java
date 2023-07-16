@@ -61,6 +61,6 @@ public class MemberController {
         Member member = loginMember.orElse(null);
         redirect.addAttribute("creatorId", member.getId());
 
-        return "redirect:/blogs/{creatorId}";
+        return "redirect:/blogs";
     }
 }
