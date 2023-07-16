@@ -1,5 +1,6 @@
 package com.landvibe.landlog.repository;
 
+import com.landvibe.landlog.controller.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 
 import java.util.List;
@@ -13,7 +14,7 @@ public interface MemberRepository {
 
 	Optional<Member> findByName(String name);
 
-	Optional<Member> findByEmailWithPassword(String email, String password);
+	Optional<Member> findByEmailWithPassword(MemberLoginForm form);
 
 	List<Member> findAll();
 }
