@@ -1,5 +1,6 @@
 package com.landvibe.landlog.service;
 
+import com.landvibe.landlog.controller.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.repository.MemoryMemberRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -63,10 +64,13 @@ class MemberServiceTest {
 
         memberService.join(member);
 
-        Optional<Member> successFindMember = memberService.login("123", "456");
-        Optional<Member> failFindMember = memberService.login("123", "wrong password");
+        MemberLoginForm memberLoginForm = new MemberLoginForm();
+        memberLoginForm.setEmail("123");
+        memberLoginForm.setPassword("456");
+
+        Optional<Member> successFindMember = memberService.login(memberLoginForm);
 
         assertThat(successFindMember.isEmpty()).isNotEqualTo(null);
-        assertThat(failFindMember.isEmpty()).isEqualTo(true);
+        assertThat(member).isEqualTo(successFindMember.get());
     }
 }
