@@ -27,7 +27,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/members/new")
-    public String create(MemberForm form) {
+    public String create(MemberJoinForm form) {
         Member member = new Member();
         member.setName(form.getName());
         member.setEmail(form.getEmail());
@@ -49,7 +49,7 @@ public class MemberController {
     }
 
     @PostMapping(value = "/members/login")
-    public String login(MemberForm form, RedirectAttributes redirect) {
+    public String login(MemberLoginForm form, RedirectAttributes redirect) {
         String email = form.getEmail();
         String password = form.getPassword();
         Optional<Member> loginMember = memberService.login(email, password);
