@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -63,19 +62,5 @@ public class MemberController {
         redirect.addAttribute("creatorId", member.getId());
 
         return "redirect:/blogs/{creatorId}";
-    }
-
-    @GetMapping(value = "/blogs/{creatorId}")
-    public String blog(@PathVariable Long creatorId, Model model) {
-        Optional<Member> blogMember = memberService.findOne(creatorId);
-
-        if (blogMember.isEmpty()) {
-            return "redirect:/";
-        }
-
-        Member member = blogMember.orElse(null);
-        model.addAttribute("member", member);
-
-        return "members/blog";
     }
 }
