@@ -1,6 +1,6 @@
 package com.landvibe.landlog.controller;
 
-public class MemberForm {
+public class MemberJoinForm {
     private String name;
     private String email;
     private String password;
