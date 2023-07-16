@@ -1,5 +1,6 @@
 package com.landvibe.landlog.repository;
 
+import com.landvibe.landlog.controller.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 
 import org.springframework.stereotype.Repository;
@@ -32,9 +33,9 @@ public class MemoryMemberRepository implements MemberRepository {
 	}
 
 	@Override
-	public Optional<Member> findByEmailWithPassword(String email, String password) {
+	public Optional<Member> findByEmailWithPassword(MemberLoginForm form) {
 		return store.values().stream()
-			.filter(member -> member.getEmail().equals(email) && member.getPassword().equals(password))
+			.filter(member -> member.getEmail().equals(form.getEmail()) && member.getPassword().equals(form.getPassword()))
 			.findAny();
 	}
 
