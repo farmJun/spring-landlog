@@ -50,9 +50,7 @@ public class MemberController {
 
     @PostMapping(value = "/members/login")
     public String login(MemberLoginForm form, RedirectAttributes redirect) {
-        String email = form.getEmail();
-        String password = form.getPassword();
-        Optional<Member> loginMember = memberService.login(email, password);
+        Optional<Member> loginMember = memberService.login(form);
 
         if (loginMember.isEmpty()) {
             return "redirect:/";
