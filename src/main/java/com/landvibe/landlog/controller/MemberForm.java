@@ -3,7 +3,6 @@ package com.landvibe.landlog.controller;
 public class MemberForm {
     private String name;
     private String email;
-
     private String password;
 
     public String getName() {
