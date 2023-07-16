@@ -1,5 +1,6 @@
 package com.landvibe.landlog.service;
 
+import com.landvibe.landlog.controller.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.repository.MemberRepository;
 
@@ -22,8 +23,8 @@ public class MemberService {
         return member.getId();
     }
 
-    public Optional<Member> login(String email, String password) {
-        return memberRepository.findByEmailWithPassword(email, password);
+    public Optional<Member> login(MemberLoginForm form) {
+        return memberRepository.findByEmailWithPassword(form.getEmail(), form.getPassword());
     }
 
     private void validateDuplicateMember(Member member) {
