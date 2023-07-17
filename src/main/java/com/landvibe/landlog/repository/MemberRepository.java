@@ -8,13 +8,15 @@ import java.util.Optional;
 
 public interface MemberRepository {
 
-	Member save(Member member);
+    //변경 전 입니다.
+    // 변경 후 입니다.
+    Member save(Member member);
 
-	Optional<Member> findById(Long id);
+    Optional<Member> findById(Long id);
 
-	Optional<Member> findByName(String name);
+    Optional<Member> findByName(String name);
 
-	Optional<Member> findByEmailWithPassword(MemberLoginForm form);
+    Optional<Member> findByEmailWithPassword(MemberLoginForm form);
 
-	List<Member> findAll();
+    List<Member> findAll();
 }

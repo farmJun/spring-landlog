@@ -14,77 +14,77 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MemoryMemberRepositoryTest {
 
-	MemoryMemberRepository repository = new MemoryMemberRepository();
+    MemoryMemberRepository repository = new MemoryMemberRepository();
 
-	@AfterEach
-	public void afterEach() {
-		repository.clearStore();
-	}
+    @AfterEach
+    public void afterEach() {
+        repository.clearStore();
+    }
 
-	@Test
-	void save() {
-		//given
-		Member member = new Member();
-		member.setEmail("spring");
+    @Test
+    void save() {
+        //given
+        Member member = new Member();
+        member.setEmail("spring");
 
-		//when
-		repository.save(member);
+        //when
+        repository.save(member);
 
-		//then
-		Member result = repository.findById(member.getId()).get();
-		assertThat(result).isEqualTo(member);
-	}
+        //then
+        Member result = repository.findById(member.getId()).get();
+        assertThat(result).isEqualTo(member);
+    }
 
-	@Test
-	public void findByName() {
-		//given
-		Member member1 = new Member();
-		member1.setEmail("spring1");
-		repository.save(member1);
-		Member member2 = new Member();
-		member2.setEmail("spring2");
-		repository.save(member2);
+    @Test
+    public void findByName() {
+        //given
+        Member member1 = new Member();
+        member1.setEmail("spring1");
+        repository.save(member1);
+        Member member2 = new Member();
+        member2.setEmail("spring2");
+        repository.save(member2);
 
-		//when
-		Member result = repository.findByName("spring1").get();
+        //when
+        Member result = repository.findByName("spring1").get();
 
-		//then
-		assertThat(result).isEqualTo(member1);
-	}
+        //then
+        assertThat(result).isEqualTo(member1);
+    }
 
-	@Test
-	public void findAll() {
-		//given
-		Member member1 = new Member();
-		member1.setEmail("spring1");
-		repository.save(member1);
-		Member member2 = new Member();
-		member2.setEmail("spring2");
-		repository.save(member2);
+    @Test
+    public void findAll() {
+        //given
+        Member member1 = new Member();
+        member1.setEmail("spring1");
+        repository.save(member1);
+        Member member2 = new Member();
+        member2.setEmail("spring2");
+        repository.save(member2);
 
-		//when
-		List<Member> result = repository.findAll();
+        //when
+        List<Member> result = repository.findAll();
 
-		//then
-		assertThat(result.size()).isEqualTo(2);
-	}
+        //then
+        assertThat(result.size()).isEqualTo(2);
+    }
 
-	@Test
-	@DisplayName("이메일과 비밀번호가 일치하는 Member 찾는 테스트")
-	public void findByEmailWithPassword() {
-		Member member = new Member();
-		member.setEmail("123");
-		member.setPassword("456");
+    @Test
+    @DisplayName("이메일과 비밀번호가 일치하는 Member 찾는 테스트")
+    public void findByEmailWithPassword() {
+        Member member = new Member();
+        member.setEmail("123");
+        member.setPassword("456");
 
-		repository.save(member);
+        repository.save(member);
 
-		MemberLoginForm memberLoginForm = new MemberLoginForm();
-		memberLoginForm.setEmail("123");
-		memberLoginForm.setPassword("456");
+        MemberLoginForm memberLoginForm = new MemberLoginForm();
+        memberLoginForm.setEmail("123");
+        memberLoginForm.setPassword("456");
 
-		Optional<Member> successFindMember = repository.findByEmailWithPassword(memberLoginForm);
+        Optional<Member> successFindMember = repository.findByEmailWithPassword(memberLoginForm);
 
-		assertThat(member).isEqualTo(successFindMember.get());
-		assertThat(successFindMember.isEmpty()).isNotEqualTo(null);
-	}
+        assertThat(member).isEqualTo(successFindMember.get());
+        assertThat(successFindMember.isEmpty()).isNotEqualTo(null);
+    }
 }
