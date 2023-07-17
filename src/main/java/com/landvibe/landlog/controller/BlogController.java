@@ -26,7 +26,7 @@ public class BlogController {
             return "redirect:/";
         }
 
-        Member member = blogMember.orElse(null);
+        Member member = blogMember.get();
         model.addAttribute("member", member);
 
         return "members/blog";
