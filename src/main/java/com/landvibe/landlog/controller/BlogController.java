@@ -29,6 +29,6 @@ public class BlogController {
         Member member = blogMember.get();
         model.addAttribute("member", member);
 
-        return "members/blog";
+        return "blogs/blogList";
     }
 }
