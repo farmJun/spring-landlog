@@ -7,6 +7,24 @@
 <body>
 <a>
     <h1 th:text="${member.name} + '의 블로그'"></h1>
+
+
+    <table>
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>제목</th>
+            <th>내용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="member : ${members}">
+            <td th:text="${member.id}"></td>
+            <td th:text="${member.name}"></td>
+            <td th:text="${member.email}"></td>
+        </tr>
+        </tbody>
+    </table>
 </a>
 </body>
 </html>
