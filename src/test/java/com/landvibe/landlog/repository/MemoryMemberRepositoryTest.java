@@ -1,6 +1,6 @@
 package com.landvibe.landlog.repository;
 
-import com.landvibe.landlog.controller.MemberLoginForm;
+import com.landvibe.landlog.controller.form.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 
 import org.junit.jupiter.api.AfterEach;
