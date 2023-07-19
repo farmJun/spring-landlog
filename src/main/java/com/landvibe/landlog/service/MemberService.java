@@ -38,6 +38,22 @@ public class MemberService {
     }
 
     public Optional<Member> findOne(Long memberId) {
-        return memberRepository.findById(memberId);
+        validateNullCreatorId(memberId);
+        Optional<Member> member = memberRepository.findById(memberId);
+        validateNullMember(member);
+        return member;
     }
+
+    private void validateNullCreatorId(Long creatorId) {
+        if (creatorId == null) {
+            throw new IllegalArgumentException("creatorId가 없습니다!");
+        }
+    }
+
+    private void validateNullMember(Optional<Member> member) {
+        if (member.isEmpty()) {
+            throw new IllegalArgumentException("일치하는 회원이 없습니다!");
+        }
+    }
+
 }
