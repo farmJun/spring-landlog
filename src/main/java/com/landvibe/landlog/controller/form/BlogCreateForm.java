@@ -2,14 +2,14 @@ package com.landvibe.landlog.controller.form;
 
 public class BlogCreateForm {
     private String title;
-    private String content;
+    private String contents;
 
     public BlogCreateForm() {
     }
 
-    public BlogCreateForm(String title, String content) {
+    public BlogCreateForm(String title, String contents) {
         this.title = title;
-        this.content = content;
+        this.contents = contents;
     }
 
     public String getTitle() {
@@ -20,11 +20,11 @@ public class BlogCreateForm {
         this.title = title;
     }
 
-    public String getContent() {
-        return content;
+    public String getContents() {
+        return contents;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 }

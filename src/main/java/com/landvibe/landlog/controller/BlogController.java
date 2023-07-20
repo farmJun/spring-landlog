@@ -62,7 +62,7 @@ public class BlogController {
         Blog blog = new Blog();
         blog.setCreatorId(creatorId);
         blog.setTitle(form.getTitle());
-        blog.setContents(form.getTitle());
+        blog.setContents(form.getContents());
 
         blogService.register(blog);
 
