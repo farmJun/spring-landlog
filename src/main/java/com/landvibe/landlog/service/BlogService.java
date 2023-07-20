@@ -1,5 +1,6 @@
 package com.landvibe.landlog.service;
 
+import com.landvibe.landlog.controller.form.BlogCreateForm;
 import com.landvibe.landlog.controller.form.BlogUpdateForm;
 import com.landvibe.landlog.domain.Blog;
 import com.landvibe.landlog.repository.BlogRepository;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class BlogService {
@@ -18,8 +18,16 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    public Long register(Blog blog) {
+    public Long register(Long creatorId, BlogCreateForm form) {
+        validateNullIds(creatorId);
+
+        Blog blog = new Blog();
+        blog.setCreatorId(creatorId);
+        blog.setTitle(form.getTitle());
+        blog.setContents(form.getContents());
+
         validateNullBlog(blog);
+
         blogRepository.register(blog);
         return blog.getId();
     }

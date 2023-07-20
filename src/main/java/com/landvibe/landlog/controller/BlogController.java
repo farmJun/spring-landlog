@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("blogs")
@@ -57,14 +56,7 @@ public class BlogController {
     @PostMapping(value = "/new")
     public String createBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, BlogCreateForm form, RedirectAttributes redirect) {
 
-        memberService.findOne(creatorId);
-
-        Blog blog = new Blog();
-        blog.setCreatorId(creatorId);
-        blog.setTitle(form.getTitle());
-        blog.setContents(form.getContents());
-
-        blogService.register(blog);
+        blogService.register(creatorId, form);
 
         redirect.addAttribute("creatorId", creatorId);
 
