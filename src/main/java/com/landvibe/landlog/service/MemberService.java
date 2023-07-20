@@ -37,11 +37,11 @@ public class MemberService {
         return memberRepository.findAll();
     }
 
-    public Optional<Member> findOne(Long memberId) {
+    public Member findOne(Long memberId) {
         validateNullCreatorId(memberId);
         Optional<Member> member = memberRepository.findById(memberId);
         validateNullMember(member);
-        return member;
+        return member.get();
     }
 
     private void validateNullCreatorId(Long creatorId) {
