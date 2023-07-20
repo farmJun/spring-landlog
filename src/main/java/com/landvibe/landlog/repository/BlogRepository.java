@@ -9,6 +9,8 @@ public interface BlogRepository {
 
     Long update(Long blogId, Blog updatedBlog);
 
+    Long delete(Long blogId);
+
     List<Blog> findAllBlogsByCreatorId(Long creatorId);
 
     Blog findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId);

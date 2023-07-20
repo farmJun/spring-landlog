@@ -30,6 +30,12 @@ public class MemoryBlogRepository implements BlogRepository {
     }
 
     @Override
+    public Long delete(Long blogId) {
+        store.remove(blogId);
+        return blogId;
+    }
+
+    @Override
     public List<Blog> findAllBlogsByCreatorId(Long creatorId) {
         return store.values()
                 .stream()

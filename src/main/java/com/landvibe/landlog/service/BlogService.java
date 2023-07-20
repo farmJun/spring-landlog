@@ -36,6 +36,15 @@ public class BlogService {
         blogRepository.update(creatorId, blog);
     }
 
+    public void delete(Long creatorId, Long blogId){
+        validateNullIds(creatorId, blogId);
+
+        Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
+        validateNullBlog(blog);
+
+        blogRepository.delete(blogId);
+    }
+
     public List<Blog> findAllBlogsByCreatorId(Long creatorId) {
         validateNullIds(creatorId);
         return blogRepository.findAllBlogsByCreatorId(creatorId);
