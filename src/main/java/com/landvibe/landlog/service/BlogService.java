@@ -26,8 +26,6 @@ public class BlogService {
         blog.setTitle(form.getTitle());
         blog.setContents(form.getContents());
 
-        validateNullBlog(blog);
-
         blog = blogRepository.register(blog);
 
         validateNullBlog(blog);
