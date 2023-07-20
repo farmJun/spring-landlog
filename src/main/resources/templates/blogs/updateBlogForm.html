@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <h1><span th:text="${name}"/>의 블로그</h1>
+  <form action="/blogs/update" method="patch">
+    <input type="hidden" id="creatorId" name="creatorId" th:value="${creatorId}">
+    <input type="hidden" id="blogId" name="blogId" th:value="${blog.id}">
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" placeholder="제목을 입력하세요" th:value="${blog.title}">
+    </div>
+    <div class="form-group">
+      <label for="contents">내용</label>
+      <textarea id="contents" name="contents" placeholder="내용을 입력하세요" th:text="${blog.contents}"></textarea>
+    </div>
+    <button type="submit">등록</button>
+  </form>
+</div> <!-- /container -->
+</body>
+</html>
