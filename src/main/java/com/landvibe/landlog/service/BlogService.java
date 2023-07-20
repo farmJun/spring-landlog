@@ -37,6 +37,7 @@ public class BlogService {
 
     public void update(Long creatorId, Long blogId, BlogForm form) {
         validateNullIds(creatorId, blogId);
+        validateNullBlogForm(form);
 
         Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
 
@@ -72,7 +73,7 @@ public class BlogService {
         List<Long> idList = Arrays.stream(ids).toList();
         for (Long id : idList) {
             if (id == null) {
-                throw new IllegalArgumentException("!!!null id!!!");
+                throw new IllegalArgumentException("모든 id는 null이 아니어야 합니다.");
             }
         }
     }
@@ -84,8 +85,8 @@ public class BlogService {
     }
 
     private void validateNullBlogForm(BlogForm form) {
-        if (form == null) {
-            throw new IllegalArgumentException("!!!null form!!!");
+        if (form == null || form.getTitle() == null || form.getContents() == null) {
+            throw new IllegalArgumentException("BlogForm 객체와 모든 필드는 null이 아니어야 합니다");
         }
     }
 }
