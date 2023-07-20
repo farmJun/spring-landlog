@@ -1,13 +1,11 @@
 package com.landvibe.landlog.repository;
 
-import com.landvibe.landlog.controller.form.BlogUpdateForm;
 import com.landvibe.landlog.domain.Blog;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository

@@ -1,7 +1,6 @@
 package com.landvibe.landlog.service;
 
-import com.landvibe.landlog.controller.form.BlogCreateForm;
-import com.landvibe.landlog.controller.form.BlogUpdateForm;
+import com.landvibe.landlog.controller.form.BlogForm;
 import com.landvibe.landlog.domain.Blog;
 import com.landvibe.landlog.repository.BlogRepository;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,9 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    public Long register(Long creatorId, BlogCreateForm form) {
+    public Long register(Long creatorId, BlogForm form) {
         validateNullIds(creatorId);
+        validateNullBlogForm(form);
 
         Blog blog = new Blog();
         blog.setCreatorId(creatorId);
@@ -28,23 +28,26 @@ public class BlogService {
 
         validateNullBlog(blog);
 
-        blogRepository.register(blog);
+        blog = blogRepository.register(blog);
+
+        validateNullBlog(blog);
+
         return blog.getId();
     }
 
-    public void update(Long creatorId, Long blogId, BlogUpdateForm form) {
+    public void update(Long creatorId, Long blogId, BlogForm form) {
         validateNullIds(creatorId, blogId);
 
         Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
-        validateNullBlog(blog);
 
         blog.setTitle(form.getTitle());
         blog.setContents(form.getContents());
 
+        validateNullBlog(blog);
         blogRepository.update(creatorId, blog);
     }
 
-    public void delete(Long creatorId, Long blogId){
+    public void delete(Long creatorId, Long blogId) {
         validateNullIds(creatorId, blogId);
 
         Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
@@ -75,8 +78,14 @@ public class BlogService {
     }
 
     private void validateNullBlog(Blog blog) {
-        if (blog == null) {
-            throw new IllegalArgumentException("일치하는 게시글이 없습니다!");
+        if (blog == null || blog.getId() == null || blog.getCreatorId() == null || blog.getTitle() == null || blog.getContents() == null) {
+            throw new IllegalArgumentException("Blog 객체와 모든 필드는 null이 아니어야 합니다.");
+        }
+    }
+
+    private void validateNullBlogForm(BlogForm form) {
+        if (form == null) {
+            throw new IllegalArgumentException("!!!null form!!!");
         }
     }
 }

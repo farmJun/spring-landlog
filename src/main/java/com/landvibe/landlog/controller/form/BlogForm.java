@@ -1,13 +1,13 @@
 package com.landvibe.landlog.controller.form;
 
-public class BlogCreateForm {
+public class BlogForm {
     private String title;
     private String contents;
 
-    public BlogCreateForm() {
+    public BlogForm() {
     }
 
-    public BlogCreateForm(String title, String contents) {
+    public BlogForm(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }

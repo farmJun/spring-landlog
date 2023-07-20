@@ -1,7 +1,6 @@
 package com.landvibe.landlog.controller;
 
-import com.landvibe.landlog.controller.form.BlogCreateForm;
-import com.landvibe.landlog.controller.form.BlogUpdateForm;
+import com.landvibe.landlog.controller.form.BlogForm;
 import com.landvibe.landlog.domain.Blog;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.service.BlogService;
@@ -54,7 +53,7 @@ public class BlogController {
     }
 
     @PostMapping(value = "/new")
-    public String createBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, BlogCreateForm form, RedirectAttributes redirect) {
+    public String createBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, BlogForm form, RedirectAttributes redirect) {
 
         blogService.register(creatorId, form);
 
@@ -79,7 +78,7 @@ public class BlogController {
     }
 
     @PostMapping(value = "/update")
-    public String updateBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogUpdateForm form, RedirectAttributes redirect) {
+    public String updateBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogForm form, RedirectAttributes redirect) {
 
         blogService.update(creatorId, blogId, form);
 
