@@ -41,7 +41,7 @@ public class BlogController {
 
 
     @GetMapping(value = "/new")
-    public String createBlogForm(@RequestParam(name = "creatorId", required = false) Long creatorId, Model model) {
+    public String createBlogForm(@RequestParam(name = "creatorId") Long creatorId, Model model) {
 
         Member member = memberService.findOne(creatorId);
         String name = member.getName();
@@ -53,7 +53,7 @@ public class BlogController {
     }
 
     @PostMapping(value = "/new")
-    public String createBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, BlogForm form, RedirectAttributes redirect) {
+    public String createBlog(@RequestParam(name = "creatorId") Long creatorId, BlogForm form, RedirectAttributes redirect) {
 
         blogService.register(creatorId, form);
 
@@ -63,7 +63,7 @@ public class BlogController {
     }
 
     @GetMapping(value = "/update")
-    public String updateBlogForm(@RequestParam(name = "creatorId", required = false) Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, Model model) {
+    public String updateBlogForm(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, Model model) {
 
         Member member = memberService.findOne(creatorId);
         String name = member.getName();
@@ -78,7 +78,7 @@ public class BlogController {
     }
 
     @PostMapping(value = "/update")
-    public String updateBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogForm form, RedirectAttributes redirect) {
+    public String updateBlog(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogForm form, RedirectAttributes redirect) {
 
         blogService.update(creatorId, blogId, form);
 
@@ -87,7 +87,7 @@ public class BlogController {
     }
 
     @DeleteMapping(value = "/delete")
-    public String deleteBlog(@RequestParam(name = "creatorId", required = false) Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, RedirectAttributes redirect) {
+    public String deleteBlog(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, RedirectAttributes redirect) {
 
         blogService.delete(creatorId, blogId);
 
