@@ -77,7 +77,7 @@ public class BlogController {
         return "blogs/updateBlogForm";
     }
 
-    @PostMapping(value = "/update")
+    @PatchMapping(value = "/update")
     public String updateBlog(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogForm form, RedirectAttributes redirect) {
 
         blogService.update(creatorId, blogId, form);
