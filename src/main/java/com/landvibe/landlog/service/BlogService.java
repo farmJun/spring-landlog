@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BlogService {
@@ -28,7 +29,7 @@ public class BlogService {
 
         blog = blogRepository.register(blog);
 
-        validateNullBlog(blog);
+        validateNullBlog(Optional.ofNullable(blog));
 
         return blog.getId();
     }
@@ -37,20 +38,21 @@ public class BlogService {
         validateNullIds(creatorId, blogId);
         validateNullBlogForm(form);
 
-        Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
+        Optional<Blog> findBlog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
+        validateNullBlog(findBlog);
 
+        Blog blog = findBlog.get();
         blog.setTitle(form.getTitle());
         blog.setContents(form.getContents());
 
-        validateNullBlog(blog);
         blogRepository.update(creatorId, blog);
     }
 
     public void delete(Long creatorId, Long blogId) {
         validateNullIds(creatorId, blogId);
 
-        Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
-        validateNullBlog(blog);
+        Optional<Blog> findBlog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
+        validateNullBlog(findBlog);
 
         blogRepository.delete(blogId);
     }
@@ -62,9 +64,10 @@ public class BlogService {
 
     public Blog findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId) {
         validateNullIds(creatorId, blogId);
-        Blog blog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
-        validateNullBlog(blog);
-        return blog;
+
+        Optional<Blog> findBlog = blogRepository.findBlogByCreatorIdAndBlogId(creatorId, blogId);
+        validateNullBlog(findBlog);
+        return findBlog.get();
     }
 
     private void validateNullIds(Long... ids) {
@@ -76,15 +79,15 @@ public class BlogService {
         }
     }
 
-    private void validateNullBlog(Blog blog) {
-        if (blog == null || blog.getId() == null || blog.getCreatorId() == null || blog.getTitle() == null || blog.getContents() == null) {
+    private void validateNullBlog(Optional<Blog> blog) {
+        if (blog.isEmpty()) {
             throw new IllegalArgumentException("Blog 객체와 모든 필드는 null이 아니어야 합니다.");
         }
     }
 
     private void validateNullBlogForm(BlogForm form) {
-        if (form == null || form.getTitle() == null || form.getContents() == null) {
-            throw new IllegalArgumentException("BlogForm 객체와 모든 필드는 null이 아니어야 합니다");
+        if (form == null || form.getTitle() == "" || form.getContents() == "") {
+            throw new IllegalArgumentException("BlogForm 객체가 null이거나, 필드가 올바르지 않습니다.");
         }
     }
 }

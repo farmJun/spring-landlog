@@ -3,6 +3,7 @@ package com.landvibe.landlog.repository;
 import com.landvibe.landlog.domain.Blog;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BlogRepository {
     Blog register(Blog blog);
@@ -13,6 +14,6 @@ public interface BlogRepository {
 
     List<Blog> findAllBlogsByCreatorId(Long creatorId);
 
-    Blog findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId);
+    Optional<Blog> findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId);
 
 }

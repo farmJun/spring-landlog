@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -42,12 +43,11 @@ public class MemoryBlogRepository implements BlogRepository {
     }
 
     @Override
-    public Blog findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId) {
+    public Optional<Blog> findBlogByCreatorIdAndBlogId(Long creatorId, Long blogId) {
         return store.values()
                 .stream()
                 .filter(blog -> blog.getCreatorId().equals(creatorId) && blog.getId().equals(blogId))
-                .findAny()
-                .orElse(null);
+                .findAny();
     }
 
 }
