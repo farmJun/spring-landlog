@@ -32,6 +32,7 @@ public class MemberService {
     }
 
     public Optional<Member> login(MemberLoginForm form) {
+        validateNullMemberLoginForm(form);
         return memberRepository.findByEmailWithPassword(form);
     }
 
@@ -70,4 +71,9 @@ public class MemberService {
         }
     }
 
+    private void validateNullMemberLoginForm(MemberLoginForm form) {
+        if (form == null || form.getEmail() == "" || form.getPassword() == "") {
+            throw new IllegalArgumentException("MemberLoginForm 객체가 null이거나, 필드가 올바르지 않습니다.");
+        }
+    }
 }
