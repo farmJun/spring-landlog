@@ -1,5 +1,6 @@
 package com.landvibe.landlog.service;
 
+import com.landvibe.landlog.controller.form.MemberJoinForm;
 import com.landvibe.landlog.controller.form.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.repository.MemberRepository;
@@ -17,7 +18,14 @@ public class MemberService {
         this.memberRepository = memberRepository;
     }
 
-    public Long join(Member member) {
+    public Long join(MemberJoinForm form) {
+        validateNullMemberJoinForm(form);
+
+        Member member = new Member();
+        member.setName(form.getName());
+        member.setEmail(form.getEmail());
+        member.setPassword(form.getPassword());
+
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
         return member.getId();
@@ -53,6 +61,12 @@ public class MemberService {
     private void validateNullMember(Optional<Member> member) {
         if (member.isEmpty()) {
             throw new IllegalArgumentException("일치하는 회원이 없습니다!");
+        }
+    }
+
+    private void validateNullMemberJoinForm(MemberJoinForm form) {
+        if (form == null || form.getName() == "" || form.getEmail() == "" || form.getPassword() == "") {
+            throw new IllegalArgumentException("MemberJoinForm 객체가 null이거나, 필드가 올바르지 않습니다.");
         }
     }
 
