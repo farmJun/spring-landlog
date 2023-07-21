@@ -94,6 +94,4 @@ public class BlogController {
         redirect.addAttribute("creatorId", creatorId);
         return "redirect:/blogs";
     }
-
-
 }
