@@ -9,6 +9,12 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(Long creatorId, String title, String contents) {
+        this.creatorId = creatorId;
+        this.title = title;
+        this.contents = contents;
+    }
+
     public Blog(Long id, Long creatorId, String title, String contents) {
         this.id = id;
         this.creatorId = creatorId;
