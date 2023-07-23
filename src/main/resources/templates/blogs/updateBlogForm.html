@@ -4,6 +4,7 @@
 <div class="container">
   <h1><span th:text="${name}"/>의 블로그</h1>
   <form action="/blogs/update" method="post">
+    <input type="hidden" name="_method" value="patch">
     <input type="hidden" id="creatorId" name="creatorId" th:value="${creatorId}">
     <input type="hidden" id="blogId" name="blogId" th:value="${blog.id}">
     <div class="form-group">
