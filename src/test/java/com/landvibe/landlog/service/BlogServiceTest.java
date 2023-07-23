@@ -2,12 +2,16 @@ package com.landvibe.landlog.service;
 
 import com.landvibe.landlog.controller.form.BlogForm;
 import com.landvibe.landlog.domain.Blog;
+import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.repository.MemoryBlogRepository;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -26,29 +30,21 @@ class BlogServiceTest {
     Long validCreatorId = 1L;
     Long invalidCreatorId = null;
     BlogForm validBlogForm = new BlogForm("title", "contents");
-    BlogForm invalidBlogForm = new BlogForm(null, null);
+    BlogForm invalidBlogForm = new BlogForm("", "");
 
     BlogForm validBlogUpdateForm = new BlogForm("updated Title", "updated Contents");
-    BlogForm invalidBlogUpdateForm = new BlogForm(null, null);
+    BlogForm invalidBlogUpdateForm = new BlogForm("", "");
 
-
-    @Test
-    void validCreatorId_validBlogCreateForm_register() {
-        // given
-        Long expectedBlogId = 1L;
-
-        Blog blog = new Blog();
-        blog.setId(expectedBlogId);
-        when(blogRepository.register(any(Blog.class))).thenReturn(blog);
-
-        // when
-        Long blogId = blogService.register(validCreatorId, validBlogForm);
-
-        // then
-        verify(blogRepository, times(1)).register(any(Blog.class));
-        assertEquals(expectedBlogId, blogId);
+    private Blog createBlog() {
+        return new Blog(validBlogId, validCreatorId, "title", "contents");
     }
 
+    private Member createMember(){
+        return new Member(1L, "name","email","password");
+    }
+
+
+    @DisplayName("유효하지 않은 creator id, 유효한 blog form -> 블로그 생성 실패")
     @Test
     void invalidCreatorId_validBlogCreateForm_register() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -58,6 +54,7 @@ class BlogServiceTest {
         verify(blogRepository, never()).register(any(Blog.class));
     }
 
+    @DisplayName("유효한 creator id, 유효하지 않은 blog form -> 블로그 생성 실패")
     @Test
     void validCreatorId_invalidBlogCreateForm_register() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -67,6 +64,7 @@ class BlogServiceTest {
         verify(blogRepository, never()).register(any(Blog.class));
     }
 
+    @DisplayName("유효하지 않은 creator id, 유효하지 않은 blog form -> 블로그 생성 실패")
     @Test
     void invalidCreatorId_invalidBlogCreateForm_register() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -76,13 +74,14 @@ class BlogServiceTest {
         verify(blogRepository, never()).register(any(Blog.class));
     }
 
+    @DisplayName("블로그 업데이트 성공")
     @Test
     void valid_update() {
         String updatedTitle = "updated Title";
         String updatedContents = "updated Contents";
 
         Blog existingBlog = new Blog(validBlogId, validCreatorId, "title", "contents");
-        when(blogRepository.findBlogByCreatorIdAndBlogId(validCreatorId, validBlogId)).thenReturn(existingBlog);
+        when(blogRepository.findBlogByCreatorIdAndBlogId(validCreatorId, validBlogId)).thenReturn(Optional.of(existingBlog));
 
         blogService.update(validCreatorId, validBlogId, validBlogUpdateForm);
 
@@ -92,24 +91,22 @@ class BlogServiceTest {
         assertEquals(updatedContents, existingBlog.getContents());
     }
 
+    @DisplayName("블로그 업데이트 실패")
     @Test
     void invalid_update() {
+        Blog existingBlog = createBlog();
 
-        Blog existingBlog = new Blog(validBlogId, validCreatorId, "title", "contents");
-        when(blogRepository.findBlogByCreatorIdAndBlogId(validCreatorId, validBlogId)).thenReturn(existingBlog);
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            blogService.update(validCreatorId, validBlogId, invalidBlogUpdateForm);
-        });
+        assertThrows(IllegalArgumentException.class, () -> blogService.update(validCreatorId, validBlogId, invalidBlogUpdateForm));
 
         verify(blogRepository, never()).update(validCreatorId, existingBlog);
-
     }
 
+    @DisplayName("블로그 삭제 성공")
     @Test
-    void delete() {
-        
-        Blog existingBlog = new Blog(validBlogId, validCreatorId, "Title", "Contents");
+    void valid_delete() {
+        blogService.register(validCreatorId,validBlogForm);
+
+        Optional<Blog> existingBlog = Optional.of(new Blog(validBlogId, validCreatorId, "title", "contents"));
 
         when(blogRepository.findBlogByCreatorIdAndBlogId(validCreatorId, validBlogId)).thenReturn(existingBlog);
 
@@ -124,4 +121,16 @@ class BlogServiceTest {
         assertNull(existingBlog);
     }
 
+    @DisplayName("블로그 삭제 실패")
+    @Test
+    void invalid_delete() {
+        blogService.register(validCreatorId,validBlogForm);
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            blogService.delete(invalidCreatorId, invalidBlogId);
+        });
+
+        verify(blogRepository, never()).findBlogByCreatorIdAndBlogId(validCreatorId, validBlogId);
+        verify(blogRepository, never()).delete(validBlogId);
+    }
 }
