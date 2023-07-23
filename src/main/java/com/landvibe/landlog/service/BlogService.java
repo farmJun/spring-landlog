@@ -22,13 +22,9 @@ public class BlogService {
         validateNullIds(creatorId);
         validateNullBlogForm(form);
 
-        Blog blog = new Blog();
-        blog.setCreatorId(creatorId);
-        blog.setTitle(form.getTitle());
-        blog.setContents(form.getContents());
+        Blog blog = new Blog(creatorId, form.getTitle(), form.getContents());
 
         blog = blogRepository.register(blog);
-
         validateNullBlog(Optional.ofNullable(blog));
 
         return blog.getId();
