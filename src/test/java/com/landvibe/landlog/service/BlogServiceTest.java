@@ -43,7 +43,6 @@ class BlogServiceTest {
         return new Member(1L, "name","email","password");
     }
 
-
     @DisplayName("유효하지 않은 creator id, 유효한 blog form -> 블로그 생성 실패")
     @Test
     void invalidCreatorId_validBlogCreateForm_register() {
@@ -51,7 +50,8 @@ class BlogServiceTest {
             blogService.register(invalidCreatorId, validBlogForm);
         });
 
-        verify(blogRepository, never()).register(any(Blog.class));
+        Blog findBlog = new Blog(invalidCreatorId, validBlogForm.getTitle(), validBlogForm.getContents());
+        verify(blogRepository, never()).register(eq(findBlog));
     }
 
     @DisplayName("유효한 creator id, 유효하지 않은 blog form -> 블로그 생성 실패")
@@ -61,7 +61,8 @@ class BlogServiceTest {
             blogService.register(validCreatorId, invalidBlogForm);
         });
 
-        verify(blogRepository, never()).register(any(Blog.class));
+        Blog findBlog = new Blog(invalidCreatorId, validBlogForm.getTitle(), validBlogForm.getContents());
+        verify(blogRepository, never()).register(eq(findBlog));
     }
 
     @DisplayName("유효하지 않은 creator id, 유효하지 않은 blog form -> 블로그 생성 실패")
@@ -71,7 +72,8 @@ class BlogServiceTest {
             blogService.register(invalidCreatorId, invalidBlogForm);
         });
 
-        verify(blogRepository, never()).register(any(Blog.class));
+        Blog findBlog = new Blog(invalidCreatorId, validBlogForm.getTitle(), validBlogForm.getContents());
+        verify(blogRepository, never()).register(eq(findBlog));
     }
 
     @DisplayName("블로그 업데이트 성공")
@@ -85,7 +87,7 @@ class BlogServiceTest {
 
         blogService.update(validCreatorId, validBlogId, validBlogUpdateForm);
 
-        verify(blogRepository, times(1)).update(validCreatorId, existingBlog);
+        verify(blogRepository).update(validCreatorId, existingBlog);
 
         assertEquals(updatedTitle, existingBlog.getTitle());
         assertEquals(updatedContents, existingBlog.getContents());
