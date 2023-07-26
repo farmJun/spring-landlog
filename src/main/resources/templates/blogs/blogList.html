@@ -1,12 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <body>
-<a>
-    <h1 th:text="${member.name} + '의 블로그'"></h1>
-</a>
+<div class="container">
+    <div>
+        <h1><span th:text="${name}"/>의 블로그</h1>
+        <p>
+            <a th:href="@{/blogs/new(creatorId=${creatorId})}">생성</a>
+        </p>
+        <table>
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>제목</th>
+                <th>내용</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="blog : ${blogs}">
+                <td th:text="${blog.id}"></td>
+                <td th:text="${blog.title}"></td>
+                <td th:text="${blog.contents}"></td>
+                <td><a th:href="@{/blogs/update(blogId=${blog.id},creatorId=${creatorId})}">수정</a></td>
+                <td>
+                    <form th:action="@{/blogs/delete(blogId=${blog.id},creatorId=${creatorId})}" th:method="delete">
+                        <button type="submit">삭제</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div> <!-- /container -->
 </body>
 </html>

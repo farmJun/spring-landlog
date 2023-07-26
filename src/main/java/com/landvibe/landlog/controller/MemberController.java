@@ -1,5 +1,7 @@
 package com.landvibe.landlog.controller;
 
+import com.landvibe.landlog.controller.form.MemberJoinForm;
+import com.landvibe.landlog.controller.form.MemberLoginForm;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.service.MemberService;
 
@@ -28,11 +30,7 @@ public class MemberController {
 
     @PostMapping(value = "/members/new")
     public String create(MemberJoinForm form) {
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setEmail(form.getEmail());
-        member.setPassword(form.getPassword());
-        memberService.join(member);
+        memberService.join(form);
         return "redirect:/";
     }
 
