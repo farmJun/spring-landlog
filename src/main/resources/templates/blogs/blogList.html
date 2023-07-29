@@ -1,5 +1,9 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
 <body>
 <div class="container">
     <div>
@@ -17,21 +21,52 @@
                 <th></th>
             </tr>
             </thead>
-            <tbody>
-            <tr th:each="blog : ${blogs}">
-                <td th:text="${blog.id}"></td>
-                <td th:text="${blog.title}"></td>
-                <td th:text="${blog.contents}"></td>
-                <td><a th:href="@{/blogs/update(blogId=${blog.id},creatorId=${creatorId})}">수정</a></td>
-                <td>
-                    <form th:action="@{/blogs/delete(blogId=${blog.id},creatorId=${creatorId})}" th:method="delete">
-                        <button type="submit">삭제</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
+            <tbody id="blogs"></tbody>
         </table>
+        <input type="hidden" id="creatorId" th:value="${creatorId}">
     </div>
 </div> <!-- /container -->
 </body>
+<script>
+    $(function () {
+        const creatorId = $("#creatorId").val();
+        axios({
+            method: 'get',
+            url: `/v1/api/blogs?creatorId=${creatorId}`,
+            headers: {
+                "Content-Type": `application/json`,
+            },
+        }).then(res => {
+            const blogsContainer = $("#blogs")
+            const blogs = res.data;
+            for (const blog of blogs) {
+                blogsContainer.append(
+                    `<tr id="blog-${blog.id}">
+                         <td>${blog.id}</td>
+                         <td>${blog.title}</td>
+                         <td>${blog.contents}</td>
+                         <td>
+                            <a type="button" href="/blogs/update?blogId=${blog.id}&creatorId=${creatorId}">
+                                <button>수정</button>
+                            </a>
+                         </td>
+                    </tr>`)
+                const row = $(`#blog-${blog.id}`);
+
+                // 삭제 버튼 추가
+                const deleteBtn = $(`<button>삭제</button>`);
+                deleteBtn.click(() => {
+                    axios({
+                        method: 'delete',
+                        url: `/v1/api/blogs/${blog.id}?creatorId=${creatorId}`,
+                    }).then(() => {
+                        console.log(`${blog.id} 삭제 완료`);
+                        row.remove();
+                    })
+                })
+                row.append(deleteBtn);
+            }
+        })
+    });
+</script>
 </html>
