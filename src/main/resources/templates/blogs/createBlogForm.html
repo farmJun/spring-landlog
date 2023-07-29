@@ -1,10 +1,13 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
 <body>
 <div class="container">
   <h1><span th:text="${name}"/>의 블로그</h1>
-  <form action="/blogs/new" method="post">
-    <input type="hidden" id="creatorId" name="creatorId" th:value="${creatorId}">
+  <div>
     <div class="form-group">
       <label for="title">제목</label>
       <input type="text" id="title" name="title" placeholder="제목을 입력하세요">
@@ -13,8 +16,33 @@
       <label for="contents">내용</label>
       <textarea id="contents" name="contents" placeholder="내용을 입력하세요"></textarea>
     </div>
-    <button type="submit">등록</button>
-  </form>
+    <button id="register-btn">등록</button>
+  </div>
+  <input type="hidden" id="creatorId" name="creatorId" th:value="${creatorId}">
 </div> <!-- /container -->
 </body>
+<script>
+  $(function () {
+    const creatorId = $("#creatorId").val();
+    $("#register-btn").on("click", () => {
+      const title = $("#title").val();
+      const contents = $("#contents").val();
+
+      axios({
+        method: 'post',
+        url: `/v1/api/blogs?creatorId=${creatorId}`,
+        headers: {
+          "Content-Type": `application/json`,
+        },
+        data: {
+          title: title,
+          contents: contents,
+          creatorId: creatorId
+        }
+      }).then(() => {
+        window.location.href = `/blogs?creatorId=${creatorId}`;
+      })
+    })
+  });
+</script>
 </html>
