@@ -13,7 +13,8 @@ import java.util.List;
 @RequestMapping("v1/api/blogs")
 public class BlogApiController {
 
-    BlogService blogService;
+
+    private final BlogService blogService;
 
     public BlogApiController(BlogService blogService) {
         this.blogService = blogService;
@@ -26,21 +27,18 @@ public class BlogApiController {
     }
 
     @PostMapping(value = "")
-    @JsonProperty("form")
     public Blog create(@RequestParam long creatorId, @RequestBody BlogForm form) {
         Blog createBlog = blogService.register(creatorId, form);
         return createBlog;
     }
 
     @GetMapping(value = "/{blogId}")
-    @JsonProperty("blog")
     public Blog update(@RequestParam long creatorId, @PathVariable("blogId") long blogId) {
         Blog updateBlog = blogService.findBlogByCreatorIdAndBlogId(creatorId, blogId);
         return updateBlog;
     }
 
     @PutMapping(value = "/{blogId}")
-    @JsonProperty("blog")
     public Blog update(@RequestParam long creatorId, @PathVariable("blogId") long blogId, @RequestBody Blog blog) {
         BlogForm form = new BlogForm(blog.getTitle(), blog.getContents());
         blogService.update(creatorId, blogId, form);
