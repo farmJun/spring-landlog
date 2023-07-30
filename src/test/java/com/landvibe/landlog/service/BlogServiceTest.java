@@ -29,18 +29,40 @@ class BlogServiceTest {
     Long invalidBlogId = null;
     Long validCreatorId = 1L;
     Long invalidCreatorId = null;
-    BlogForm validBlogForm = new BlogForm("title", "contents");
-    BlogForm invalidBlogForm = new BlogForm("", "");
+    BlogForm validBlogForm = BlogForm.builder()
+            .title("title")
+            .contents("contents")
+            .build();
+    BlogForm invalidBlogForm = BlogForm.builder()
+            .title("")
+            .contents("")
+            .build();
 
-    BlogForm validBlogUpdateForm = new BlogForm("updated Title", "updated Contents");
-    BlogForm invalidBlogUpdateForm = new BlogForm("", "");
+    BlogForm validBlogUpdateForm = BlogForm.builder()
+            .title("updated Title")
+            .contents("updated Contents")
+            .build();
+    BlogForm invalidBlogUpdateForm = BlogForm.builder()
+            .title("")
+            .contents("")
+            .build();
 
     private Blog createBlog() {
-        return new Blog(validBlogId, validCreatorId, "title", "contents");
+        return Blog.builder()
+                .creatorId(validCreatorId)
+                .id(validBlogId)
+                .title("title")
+                .contents("contents")
+                .build();
     }
 
     private Member createMember(){
-        return new Member(1L, "name","email","password");
+        return  Member.builder()
+                .id(1L)
+                .name("name")
+                .email("email")
+                .password("password")
+                .build();
     }
 
     @DisplayName("유효하지 않은 creator id, 유효한 blog form -> 블로그 생성 실패")

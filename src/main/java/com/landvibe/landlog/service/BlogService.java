@@ -22,7 +22,11 @@ public class BlogService {
         validateNullIds(creatorId);
         validateNullBlogForm(form);
 
-        Blog blog = new Blog(creatorId, form.getTitle(), form.getContents());
+        Blog blog = Blog.builder()
+                .creatorId(creatorId)
+                .title(form.getTitle())
+                .contents(form.getContents())
+                .build();
 
         blog = blogRepository.register(blog);
         validateNullBlog(Optional.ofNullable(blog));

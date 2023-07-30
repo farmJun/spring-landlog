@@ -21,10 +21,11 @@ public class MemberService {
     public Long join(MemberJoinForm form) {
         validateNullMemberJoinForm(form);
 
-        Member member = new Member();
-        member.setName(form.getName());
-        member.setEmail(form.getEmail());
-        member.setPassword(form.getPassword());
+        Member member = Member.builder()
+                .name(form.getName())
+                .email(form.getEmail())
+                .password(form.getPassword())
+                .build();
 
         validateDuplicateMember(member); //중복 회원 검증
         memberRepository.save(member);
