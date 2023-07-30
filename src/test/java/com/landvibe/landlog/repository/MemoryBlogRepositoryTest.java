@@ -21,8 +21,11 @@ class MemoryBlogRepositoryTest {
     @Test
     @DisplayName("블로그 등록 성공")
     void valid_register() {
-        Blog blog = new Blog(validCreatorId, "title", "contents");
-
+        Blog blog = Blog.builder()
+                .creatorId(validCreatorId)
+                .title("title")
+                .contents("contents")
+                .build();
         memoryBlogRepository.register(blog);
 
         Blog findBlog = memoryBlogRepository.findBlogByCreatorIdAndBlogId(validCreatorId, blog.getId()).get();
@@ -36,8 +39,17 @@ class MemoryBlogRepositoryTest {
         String expectedTitle = "update title";
         String expectedContents = "update contents";
 
-        Blog blog = new Blog(validCreatorId, "title", "contents");
-        Blog updateBlog = new Blog(validCreatorId, "update title", "update contents");
+        Blog blog = Blog.builder()
+                .creatorId(validCreatorId)
+                .title("title")
+                .contents("contents")
+                .build();
+
+        Blog updateBlog = Blog.builder()
+                .creatorId(validCreatorId)
+                .title("update title")
+                .contents("update contents")
+                .build();
 
         memoryBlogRepository.register(blog);
         updateBlog.setId(blog.getId());
@@ -56,7 +68,11 @@ class MemoryBlogRepositoryTest {
     @Test
     @DisplayName("블로그 삭제 성공")
     void delete() {
-        Blog blog = new Blog(validCreatorId, "title", "contents");
+        Blog blog = Blog.builder()
+                .creatorId(validCreatorId)
+                .title("title")
+                .contents("contents")
+                .build();
         memoryBlogRepository.register(blog);
 
         memoryBlogRepository.delete(blog.getId());

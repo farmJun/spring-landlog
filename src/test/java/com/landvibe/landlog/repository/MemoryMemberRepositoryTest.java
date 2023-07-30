@@ -24,8 +24,9 @@ class MemoryMemberRepositoryTest {
     @Test
     void save() {
         //given
-        Member member = new Member();
-        member.setEmail("spring");
+        Member member = Member.builder()
+                .email("spring")
+                .build();
 
         //when
         repository.save(member);
@@ -38,11 +39,14 @@ class MemoryMemberRepositoryTest {
     @Test
     public void findByName() {
         //given
-        Member member1 = new Member();
-        member1.setEmail("spring1");
+        Member member1 = Member.builder()
+                .email("spring1")
+                .build();
         repository.save(member1);
-        Member member2 = new Member();
-        member2.setEmail("spring2");
+
+        Member member2 = Member.builder()
+                .email("spring2")
+                .build();
         repository.save(member2);
 
         //when
@@ -55,11 +59,14 @@ class MemoryMemberRepositoryTest {
     @Test
     public void findAll() {
         //given
-        Member member1 = new Member();
-        member1.setEmail("spring1");
+        Member member1 = Member.builder()
+                .email("spring1")
+                .build();
         repository.save(member1);
-        Member member2 = new Member();
-        member2.setEmail("spring2");
+
+        Member member2 = Member.builder()
+                .email("spring2")
+                .build();
         repository.save(member2);
 
         //when
@@ -72,15 +79,17 @@ class MemoryMemberRepositoryTest {
     @Test
     @DisplayName("이메일과 비밀번호가 일치하는 Member 찾는 테스트")
     public void findByEmailWithPassword() {
-        Member member = new Member();
-        member.setEmail("123");
-        member.setPassword("456");
-
+        Member member = Member.builder()
+                .email("123")
+                .password("456")
+                .build();
         repository.save(member);
 
-        MemberLoginForm memberLoginForm = new MemberLoginForm();
-        memberLoginForm.setEmail("123");
-        memberLoginForm.setPassword("456");
+
+        MemberLoginForm memberLoginForm = MemberLoginForm.builder()
+                .email("123")
+                .password("456")
+                .build();
 
         Optional<Member> successFindMember = repository.findByEmailWithPassword(memberLoginForm);
 

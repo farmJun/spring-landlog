@@ -31,12 +31,20 @@ class MemberServiceTest {
         memberRepository.clearStore();
     }
 
-    MemberJoinForm memberJoinForm = new MemberJoinForm("name","email","password");
+    MemberJoinForm memberJoinForm = MemberJoinForm.builder()
+            .name("name")
+            .email("email")
+            .password("password")
+            .build();
     @Test
     public void 회원가입() throws Exception {
         //Given
-        Member member = new Member(1L, "name", "email", "password");
-
+        Member member = Member.builder()
+                .id(1L)
+                .name("name")
+                .email("email")
+                .password("password")
+                .build();
         //When
         Long saveId = memberService.join(memberJoinForm);
         //Then
@@ -49,9 +57,10 @@ class MemberServiceTest {
     public void login() {
         memberService.join(memberJoinForm);
 
-        MemberLoginForm memberLoginForm = new MemberLoginForm();
-        memberLoginForm.setEmail("email");
-        memberLoginForm.setPassword("password");
+        MemberLoginForm memberLoginForm = MemberLoginForm.builder()
+                .email("email")
+                .password("password")
+                .build();
 
         Optional<Member> successFindMember = memberService.login(memberLoginForm);
 
