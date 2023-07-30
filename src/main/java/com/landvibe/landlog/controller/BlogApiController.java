@@ -1,7 +1,5 @@
 package com.landvibe.landlog.controller;
 
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.landvibe.landlog.controller.form.BlogForm;
 import com.landvibe.landlog.domain.Blog;
 import com.landvibe.landlog.service.BlogService;
