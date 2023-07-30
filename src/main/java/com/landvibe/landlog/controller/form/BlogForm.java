@@ -7,6 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class BlogForm {
     private String title;
     private String contents;
@@ -14,7 +15,6 @@ public class BlogForm {
     public BlogForm() {
     }
 
-    @Builder
     public BlogForm(String title, String contents) {
         this.title = title;
         this.contents = contents;

@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class Blog {
     private Long id;
     private Long creatorId;
@@ -21,7 +22,6 @@ public class Blog {
         this.contents = contents;
     }
 
-    @Builder
     public Blog(Long id, Long creatorId, String title, String contents) {
         this.id = id;
         this.creatorId = creatorId;

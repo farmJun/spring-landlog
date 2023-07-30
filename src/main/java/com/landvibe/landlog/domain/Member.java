@@ -6,6 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class Member {
 
     private Long id;
@@ -16,7 +17,6 @@ public class Member {
     public Member() {
     }
 
-    @Builder
     public Member(Long id, String name, String email, String password) {
         this.id = id;
         this.name = name;

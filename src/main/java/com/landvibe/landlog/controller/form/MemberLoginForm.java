@@ -6,11 +6,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class MemberLoginForm {
     private String email;
     private String password;
 
-    @Builder
     public MemberLoginForm(String email, String password) {
         this.email = email;
         this.password = password;

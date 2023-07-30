@@ -6,12 +6,12 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 public class MemberJoinForm {
     private String name;
     private String email;
     private String password;
 
-    @Builder
     public MemberJoinForm(String name, String email, String password) {
         this.name = name;
         this.email = email;
