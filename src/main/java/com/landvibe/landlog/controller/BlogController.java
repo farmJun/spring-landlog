@@ -1,6 +1,5 @@
 package com.landvibe.landlog.controller;
 
-import com.landvibe.landlog.controller.form.BlogForm;
 import com.landvibe.landlog.domain.Blog;
 import com.landvibe.landlog.domain.Member;
 import com.landvibe.landlog.service.BlogService;
@@ -8,7 +7,6 @@ import com.landvibe.landlog.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -52,16 +50,6 @@ public class BlogController {
         return "blogs/createBlogForm";
     }
 
-    @PostMapping(value = "/new")
-    public String createBlog(@RequestParam(name = "creatorId") Long creatorId, BlogForm form, RedirectAttributes redirect) {
-
-        blogService.register(creatorId, form);
-
-        redirect.addAttribute("creatorId", creatorId);
-
-        return "redirect:/blogs";
-    }
-
     @GetMapping(value = "/update")
     public String updateBlogForm(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, Model model) {
 
@@ -75,23 +63,5 @@ public class BlogController {
         model.addAttribute("blog", blog);
 
         return "blogs/updateBlogForm";
-    }
-
-    @PatchMapping(value = "/update")
-    public String updateBlog(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, BlogForm form, RedirectAttributes redirect) {
-
-        blogService.update(creatorId, blogId, form);
-
-        redirect.addAttribute("creatorId", creatorId);
-        return "redirect:/blogs";
-    }
-
-    @DeleteMapping(value = "/delete")
-    public String deleteBlog(@RequestParam(name = "creatorId") Long creatorId, @RequestParam(name = "blogId", required = false) Long blogId, RedirectAttributes redirect) {
-
-        blogService.delete(creatorId, blogId);
-
-        redirect.addAttribute("creatorId", creatorId);
-        return "redirect:/blogs";
     }
 }

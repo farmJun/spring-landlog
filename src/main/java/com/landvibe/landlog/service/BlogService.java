@@ -18,7 +18,7 @@ public class BlogService {
         this.blogRepository = blogRepository;
     }
 
-    public Long register(Long creatorId, BlogForm form) {
+    public Blog register(Long creatorId, BlogForm form) {
         validateNullIds(creatorId);
         validateNullBlogForm(form);
 
@@ -27,7 +27,7 @@ public class BlogService {
         blog = blogRepository.register(blog);
         validateNullBlog(Optional.ofNullable(blog));
 
-        return blog.getId();
+        return blog;
     }
 
     public void update(Long creatorId, Long blogId, BlogForm form) {
